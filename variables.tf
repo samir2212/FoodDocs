@@ -1,9 +1,3 @@
-variable "aws_profile" {
-  description = "AWS profile"
-  type        = string
-  default     = "fooddocs"
-}
-
 variable "aws_region" {
   description = "AWS region"
   type        = string
@@ -32,4 +26,19 @@ variable "service_desired_count" {
   description = "ECS service name"
   type        = string
   default     = "1"
+}
+
+variable "username"{
+  type = string
+  default = "admin"
+}
+
+variable "az-1"{
+  type = string
+  default = "eu-central-1a"
+}
+
+variable "az-2"{
+  type = string
+  default = "eu-central-1b"
 }
