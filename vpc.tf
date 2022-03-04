@@ -1,7 +1,7 @@
 resource "aws_vpc" "vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "${var.project}-VPC"
+    Name = "${var.project}-${local.stage_name}-VPC"
   }
 }
 
@@ -10,18 +10,30 @@ resource "aws_subnet" "public_subnet1" {
   cidr_block = "10.0.0.0/24"
 
   tags = {
-    Name = "${var.project}-public-subnet1"
+    Name = "${var.project}-${local.stage_name}-public-subnet1"
   }
 }
 
 resource "aws_subnet" "private_subnet1" {
   vpc_id     = aws_vpc.vpc.id
   cidr_block = "10.0.1.0/24"
+  availability_zone = var.az-1
 
   tags = {
-    Name = "${var.project}-private-subnet1"
+    Name = "${var.project}-${local.stage_name}-private-subnet1"
   }
 }
+
+resource "aws_subnet" "private_subnet2" {
+  vpc_id     = aws_vpc.vpc.id
+  cidr_block = "10.0.2.0/24"
+  availability_zone = var.az-2
+
+  tags = {
+    Name = "${var.project}-${local.stage_name}-private-subnet2"
+  }
+}
+
 
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
