@@ -122,3 +122,25 @@ resource "aws_iam_role_policy_attachment" "ecs-task-execution-role-policy-attach
   role       = aws_iam_role.task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
+
+data "aws_iam_policy_document" "s3_data_bucket_policy" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.fooddocs-dev-env-bucket.arn}/${var.env-file}"]
+  }
+  statement {
+    actions   = ["s3:GetBucketLocation"]
+    resources = ["${aws_s3_bucket.fooddocs-dev-env-bucket.arn}"]
+  }
+}
+
+resource "aws_iam_policy" "pull_env_from_s3_policy" {
+  name   = "pull_env_from_s3_policy"
+  path   = "/"
+  policy = data.aws_iam_policy_document.s3_data_bucket_policy.json
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_role_s3_data_bucket_policy_attach" {
+  role       = aws_iam_role.task_execution_role.name
+  policy_arn = aws_iam_policy.pull_env_from_s3_policy.arn
+}

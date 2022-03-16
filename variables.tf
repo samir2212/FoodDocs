@@ -28,17 +28,22 @@ variable "service_desired_count" {
   default     = "1"
 }
 
-variable "username"{
-  type = string
+variable "username" {
+  type    = string
   default = "admin"
 }
 
-variable "az-1"{
-  type = string
+variable "az-1" {
+  type    = string
   default = "eu-central-1a"
 }
 
-variable "az-2"{
-  type = string
+variable "az-2" {
+  type    = string
   default = "eu-central-1b"
+}
+
+variable "env-file" {
+  type    = string
+  default = "development.env"
 }

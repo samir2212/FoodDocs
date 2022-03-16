@@ -25,43 +25,36 @@ resource "aws_ecs_task_definition" "task_definition" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "512"
   memory                   = "1024"
-  container_definitions    = <<DEFINITION
-[
-  {
-    "logConfiguration": {
-          "logDriver": "awslogs",
-          "options": {
-            "awslogs-group": "${local.log_group}",
-            "awslogs-region": "${local.region}",
-            "awslogs-stream-prefix": "/aws/ecs"
-          }
-        },
-    "cpu":0,
-    "dnsSearchDomains":[],
-    "dnsServers":[],
-    "dockerLabels":{},
-    "dockerSecurityOptions":[],
-    "essential":true,
-    "extraHosts":[],
-    "image": "${local.ecr_repo}",
-    "links":[],
-    "mountPoints":[],
-    "name": "${var.service_name}",
-    "portMappings":[
-      {
-        "containerPort": 80,
-        "hostPort":80,
-        "protocol": "tcp"
+
+  container_definitions = jsonencode([
+    {
+      name      = "${var.service_name}"
+      image     = "${local.ecr_repo}"
+      cpu       = 10
+      memory    = 128
+      essential = true
+      portMappings = [
+        {
+          containerPort = 80
+          hostPort      = 80
+        }
+      ]
+      logConfiguration = {
+        logDriver = "awslogs",
+        options = {
+          awslogs-group         = "${local.log_group}",
+          awslogs-region        = "${local.region}",
+          awslogs-stream-prefix = "/aws/ecs"
+        }
       }
-    ],
-    "ulimits":[],
-    "volumesFrom":[],
-    "environment": [
-        {"name": "REGION", "value": "${local.region}"}
-    ]
-  }
-]
-DEFINITION
+      environmentFiles = [
+        {
+          value = "${aws_s3_bucket.fooddocs-dev-env-bucket.arn}/${var.env-file}"
+          "type" : "s3"
+        }
+      ]
+    }
+  ])
 }
 
 resource "aws_ecs_service" "ecs_service" {

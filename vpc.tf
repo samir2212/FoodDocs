@@ -6,17 +6,28 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "public_subnet1" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.0.0.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.0.0/24"
+  availability_zone = var.az-1
 
   tags = {
     Name = "${var.project}-${local.stage_name}-public-subnet1"
   }
 }
 
+resource "aws_subnet" "public_subnet2" {
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = var.az-2
+
+  tags = {
+    Name = "${var.project}-${local.stage_name}-public-subnet2"
+  }
+}
+
 resource "aws_subnet" "private_subnet1" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.2.0/24"
   availability_zone = var.az-1
 
   tags = {
@@ -25,8 +36,8 @@ resource "aws_subnet" "private_subnet1" {
 }
 
 resource "aws_subnet" "private_subnet2" {
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id            = aws_vpc.vpc.id
+  cidr_block        = "10.0.3.0/24"
   availability_zone = var.az-2
 
   tags = {
