@@ -63,8 +63,13 @@ resource "aws_ecs_service" "ecs_service" {
   launch_type     = "FARGATE"
   desired_count   = var.service_desired_count
   task_definition = aws_ecs_task_definition.task_definition.arn
+  load_balancer {
+    target_group_arn = module.alb.target_group_arns[0]
+    container_name   = var.service_name
+    container_port   = 80
+  }
   network_configuration {
-    security_groups = [aws_security_group.security_group.id]
+    security_groups = [aws_security_group.security_group.id, module.sg_alb.security_group_id]
     subnets         = [aws_subnet.private_subnet1.id]
   }
   tags = merge(local.tags, { Name = var.service_name })
