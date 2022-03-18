@@ -65,6 +65,11 @@ resource "aws_route_table_association" "route_table_association1" {
   route_table_id = aws_route_table.route_table.id
 }
 
+resource "aws_route_table_association" "route_table_association2" {
+  subnet_id      = aws_subnet.public_subnet2.id
+  route_table_id = aws_route_table.route_table.id
+}
+
 resource "aws_eip" "elastic_ip" {
   vpc = true
 
@@ -94,6 +99,11 @@ resource "aws_route" "ngw_route" {
 
 resource "aws_route_table_association" "ngw_route_table_association1" {
   subnet_id      = aws_subnet.private_subnet1.id
+  route_table_id = aws_route_table.ngw_route_table.id
+}
+
+resource "aws_route_table_association" "ngw_route_table_association2" {
+  subnet_id      = aws_subnet.private_subnet2.id
   route_table_id = aws_route_table.ngw_route_table.id
 }
 
