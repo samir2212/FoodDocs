@@ -6,9 +6,9 @@ module "mysql-rds" {
   allocated_storage         = "20"
   max_allocated_storage     = "40"
   create_db_parameter_group = false
-  engine                    = "mysql"
-  major_engine_version      = "8.0"
-  engine_version            = "8.0.28"
+  engine                    = "mariadb"
+  major_engine_version      = "10.4"
+  engine_version            = "10.4.24"
   instance_class            = "db.t3.micro"
   port                      = "3306"
 
