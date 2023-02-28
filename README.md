@@ -1,3 +1,29 @@
+# HowTo
+
+
+## Prerequisites
+1. export below environment variables in your shell:
+   - AWS_ACCESS_KEY_ID=<YOUR_IAMAWS_ACCESS_KEY_ID>
+   - AWS_SECRET_ACCESS_KEY=<YOUR_IAM_AWS_SECRET_ACCESS_KEY>
+
+## Terraform init 
+
+```
+terraform init 
+```
+
+In the current situation the terraform state already exist in s3 bucket.
+
+
+
+## Deploy FooDocs Infrastructure
+
+```
+terraform plan
+terraform apply
+```
+
+
 ## Requirements
 
 | Name | Version |
