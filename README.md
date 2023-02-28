@@ -1,8 +1,8 @@
 # Goal
 
-## (ZeroOps | Building Startups on AWS | Deploy 10000 times/day)[https://www.linkedin.com/posts/activity-6987642170161664000-Y4l8?utm_source=share&utm_medium=member_desktop]
+## [ZeroOps | Building Startups on AWS | Deploy 10000 times/day](https://www.linkedin.com/posts/activity-6987642170161664000-Y4l8?utm_source=share&utm_medium=member_desktop)
 
-# HowTo
+# How To Deploy Terraform Scripts
 
 ## Prerequisites
 
